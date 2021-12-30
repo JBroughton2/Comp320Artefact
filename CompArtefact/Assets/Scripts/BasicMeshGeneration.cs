@@ -10,69 +10,54 @@ public class BasicMeshGeneration : MonoBehaviour
     Vector3[] vertices;
     Vector2[] uvs;
     Vector3[] normals;
-    int[] triangles;
 
     public int m_length;
     public int m_width;
 
     public int xSize, zSize;
 
-    //Triangles have to be made clockewise in unity.
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        myMesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = myMesh;
-
+        //StartCoroutine(CreateShape());
         CreateShape();
-        UpdateMesh();
+        //UpdateMesh();
     }
 
+    //change to IEnumerator if you want to see it do each section.
     void CreateShape()
     {
-        /*
-        vertices = new Vector3[]
-        {
-            new Vector3 (0, 0, 0),
-            new Vector3 (0, 0, m_length),
-            new Vector3 (m_width, 0, 0),
-            new Vector3 (m_width, 0, m_length)
-        };
+        //uncomment if want to see process slower.
+        //WaitForSeconds wait = new WaitForSeconds(0.05f);
 
-        uvs = new Vector2[]
-        {
-            new Vector2 (0.0f, 0.0f),
-            new Vector2 (0.0f, 1.0f),
-            new Vector2 (1.0f, 1.0f),
-            new Vector2 (1.0f, 0.0f)
-        };
+        GetComponent<MeshFilter>().mesh = myMesh = new Mesh();
+        myMesh.name = "ProceduralMesh";
 
-        normals = new Vector3[]
-        {
-            Vector3.up,
-            Vector3.up,
-            Vector3.up,
-            Vector3.up
-        };
-
-        triangles = new int[]
-        {
-            0, 1, 2,
-            1, 3, 2
-        };
-        */
-
-        
         vertices = new Vector3[(xSize + 1) * (zSize + 1)];
-        for(int i = 0, z = 0; z <= zSize; z++)
-        {
-            for (int x = 0; x <= xSize; x++, i++) 
-            {
+        for(int i = 0, z = 0; z <= zSize; z++) {
+            for (int x = 0; x <= xSize; x++, i++) {
                 vertices[i] = new Vector3(x, z);
             }
         }
+
+        //set the mesh vertices to be that which we calculated above
+        myMesh.vertices = vertices;
+
+        //multiply by the amount of quads we want
+        int[] triangles = new int[xSize * 6];
+        for (int ti = 0, vi = 0, x = 0; x < xSize; x++, ti += 6, vi++) 
+        {
+            triangles[ti] = vi;
+            triangles[ti + 3] = triangles[ti + 2] = vi + 1;
+            triangles[ti + 4] = triangles[ti + 1] = vi + xSize + 1;
+            triangles[ti + 5] = vi + xSize + 2;
+            //set my mesh triangles to be that calculated above.
+            myMesh.triangles = triangles;
+            //uncomment if want to see process slower.
+            //yield return wait;
+        }
         
     }
+
 
     void UpdateMesh() 
     {
@@ -81,13 +66,10 @@ public class BasicMeshGeneration : MonoBehaviour
 
         //Set the mesh verticies to be the ones I have specified above
         myMesh.vertices = vertices;
-        //Set the mesh triangles to be the ones I have specified above
-        myMesh.triangles = triangles;
 
         myMesh.RecalculateBounds();
     }
 
-    
     private void OnDrawGizmos()
     {
         //stops errors during edit mode.

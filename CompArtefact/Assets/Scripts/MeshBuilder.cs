@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshBuilder : MonoBehaviour
+public class MeshBuilder
 {
+    /*
     private List<Vector3> m_Vertices = new List<Vector3>();
     public List<Vector3> Vertices { get { return m_Vertices; } }
 
@@ -33,4 +34,7 @@ public class MeshBuilder : MonoBehaviour
 
         return customMesh;
     }
+    */
+
+    public string test = "hello";
 }

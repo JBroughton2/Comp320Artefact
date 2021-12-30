@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class CreateQuad : MonoBehaviour
 {
-    MeshBuilder meshBuilder = new MeshBuilder();
+    MeshBuilder meshBuilding = new MeshBuilder();
+
+    void Test() 
+    {
+
+    }
 
     //Set up the vertices and tris
     //meshBuilder.Vertices.Add(new Vector3(0.0f, 0.0f, 0.0f));
