@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MeshBuilder
 {
-    /*
     private List<Vector3> m_Vertices = new List<Vector3>();
     public List<Vector3> Vertices { get { return m_Vertices; } }
 
@@ -34,7 +33,4 @@ public class MeshBuilder
 
         return customMesh;
     }
-    */
-
-    public string test = "hello";
 }
