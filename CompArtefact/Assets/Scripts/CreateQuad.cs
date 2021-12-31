@@ -11,22 +11,12 @@ public class CreateQuad : MonoBehaviour
 
     private void Start()
     {
-        /*
-        for(int i = 0; i < m_segmentCount; i++)
-        {
-            float z = m_Length * i;
+        GenerateCube();
+        GenerateMesh();
+    }
 
-            for(int j = 0; j < m_segmentCount; j++)
-            {
-                float x = m_Width * j;
-
-                Vector3 offset = new Vector3(x, 0, z);
-
-                QuadGeneration(meshBuilder, offset);
-            }
-        }
-        */
-
+    public void GenerateCube() 
+    {
         Vector3 upDir = Vector3.up * m_height;
         Vector3 rightDir = Vector3.right * m_Width;
         Vector3 forwardDir = Vector3.forward * m_Length;
@@ -35,43 +25,21 @@ public class CreateQuad : MonoBehaviour
         Vector3 farCorner = upDir + rightDir + forwardDir;
 
         //base of the cube
-        CubeGeneration(meshBuilder, nearCorner, forwardDir, rightDir);
+        QuadGeneration(meshBuilder, nearCorner, forwardDir, rightDir);
         //front face
-        CubeGeneration(meshBuilder, nearCorner, rightDir, upDir);
+        QuadGeneration(meshBuilder, nearCorner, rightDir, upDir);
         //left side face
-        CubeGeneration(meshBuilder, nearCorner, upDir, forwardDir);
+        QuadGeneration(meshBuilder, nearCorner, upDir, forwardDir);
 
         //top face, fright and forward flipped so it faces up not down and numbers made negative to come the right direction.
-        CubeGeneration(meshBuilder, farCorner, -rightDir, -forwardDir);
+        QuadGeneration(meshBuilder, farCorner, -rightDir, -forwardDir);
         //back face
-        CubeGeneration(meshBuilder, farCorner, -upDir, -rightDir);
+        QuadGeneration(meshBuilder, farCorner, -upDir, -rightDir);
         //right side face
-        CubeGeneration(meshBuilder, farCorner, -forwardDir, -upDir);
-
-        GenerateMesh();
+        QuadGeneration(meshBuilder, farCorner, -forwardDir, -upDir);
     }
 
-    /*
-    void QuadGeneration(MeshBuilder meshBuilder, Vector3 vertexOffset, Vector3 widthDir, Vector3 lengthDir) 
-    {
-        //Vector3 normal = Vector3.Cross(lengthDir, widthDir).normalized;
-
-        meshBuilder.Vertices.Add(new Vector3(0.0f, 0.0f, 0.0f) + vertexOffset);
-
-        meshBuilder.Vertices.Add(new Vector3(0.0f, 0.0f, m_Length) + vertexOffset);
-
-        meshBuilder.Vertices.Add(new Vector3(m_Width, 0.0f, m_Length) + vertexOffset);
-
-        meshBuilder.Vertices.Add(new Vector3(m_Width, 0.0f, 0.0f) + vertexOffset);
-
-        int baseIndex = meshBuilder.Vertices.Count - 4;
-
-        meshBuilder.AddTriangle(baseIndex, baseIndex + 1, baseIndex + 2);
-        meshBuilder.AddTriangle(baseIndex, baseIndex + 2, baseIndex + 3);
-    }
-    */
-
-    void CubeGeneration(MeshBuilder meshBuilder, Vector3 vertexOffset, Vector3 widthDir, Vector3 lengthDir)
+    void QuadGeneration(MeshBuilder meshBuilder, Vector3 vertexOffset, Vector3 widthDir, Vector3 lengthDir)
     {
         //Vector3 normal = Vector3.Cross(lengthDir, widthDir).normalized;
 
@@ -89,7 +57,7 @@ public class CreateQuad : MonoBehaviour
         meshBuilder.AddTriangle(baseIndex, baseIndex + 2, baseIndex + 3);
     }
 
-    void GenerateMesh() 
+    public void GenerateMesh() 
     {
         MeshFilter filter = this.gameObject.GetComponent<MeshFilter>();
 
