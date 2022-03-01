@@ -18,6 +18,11 @@ public class DungeonGenerator
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dungeonWidth, dungeonLength);
         allSpaceNodes = bsp.PrepareNodesCollection(maxIterations, roomMinWidth, roomMinLength);
-        return new List<Node>(allSpaceNodes);
+        //extract all the lowest nodes that have no children, these will represent our rooms.
+        List<Node> roomSpaces = StructureManager.TraverseGraphToExtractLowestLeafs(bsp.RootNode);
+        RoomGenerator roomGenerator = new RoomGenerator(maxIterations, roomMinLength, roomMinWidth);
+        List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces);
+        return new List<Node>(roomList);
+
     }
 }
