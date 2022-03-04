@@ -14,15 +14,23 @@ public class DungeonGenerator
         this.dungeonWidth = dungeonWidth;
     }
 
-    public List<Node> CalculateRooms(int maxIterations, int roomMinWidth, int roomMinLength)
+    public List<Node> CalculateDungeon(int maxIterations, int roomMinWidth, int roomMinLength, int corridorWidth)
     {
         BinarySpacePartitioner bsp = new BinarySpacePartitioner(dungeonWidth, dungeonLength);
         allSpaceNodes = bsp.PrepareNodesCollection(maxIterations, roomMinWidth, roomMinLength);
+
         //extract all the lowest nodes that have no children, these will represent our rooms.
         List<Node> roomSpaces = StructureManager.TraverseGraphToExtractLowestLeafs(bsp.RootNode);
+
         RoomGenerator roomGenerator = new RoomGenerator(maxIterations, roomMinLength, roomMinWidth);
         List<RoomNode> roomList = roomGenerator.GenerateRoomsInGivenSpaces(roomSpaces);
+
+        CorridorsGenerator corridorsGenerator = new CorridorsGenerator();
+        var corridorList = corridorsGenerator.CreateCorridors(allSpaceNodes, corridorWidth); ;
+
         return new List<Node>(roomList);
+
+        
 
     }
 }

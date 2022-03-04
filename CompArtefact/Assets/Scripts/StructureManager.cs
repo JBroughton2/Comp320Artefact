@@ -59,3 +59,10 @@ public static class StructureManager
             Random.Range((int)(minY +(maxY - minY)*pointModifier), maxY));
     }
 }
+public enum RelativePosition
+{
+    Up,
+    Down,
+    Right,
+    Left
+}
