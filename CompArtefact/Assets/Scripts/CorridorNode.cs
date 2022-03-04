@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 internal class CorridorNode : Node
@@ -41,7 +43,50 @@ internal class CorridorNode : Node
 
     private void ProcessRoomInRelationRightOrLeft(Node structureOne, Node structureTwo)
     {
-        throw new NotImplementedException();
+        Node leftStructure = null;
+        List<Node> leftStructureChildren = StructureManager.TraverseGraphToExtractLowestLeafs(structureOne);
+
+        Node rightStructure = null;
+        List<Node> rightStructureChildren = StructureManager.TraverseGraphToExtractLowestLeafs(structureTwo);
+
+        //sort all the children of the left structure by the x value in the top right, this should stop overlap as these are the most right side structures from the left list.
+        var sortedLeftStructures = leftStructureChildren.OrderByDescending(child => child.TopRightAreaCorner.x).ToList();
+        if(sortedLeftStructures.Count == 1)
+        {
+            leftStructure = sortedLeftStructures[0];
+        }
+        else
+        {
+            int maxX = sortedLeftStructures[0].TopRightAreaCorner.x;
+            sortedLeftStructures = sortedLeftStructures.Where(children => Math.Abs(maxX - children.TopRightAreaCorner.x) < 10).ToList();
+            int index = UnityEngine.Random.Range(0, sortedLeftStructures.Count);
+            leftStructure = sortedLeftStructures[index];
+        }
+
+        var possibleNeighboursInRightStructureList = rightStructureChildren.Where(child => GetValidYForNeightbourLeftRight(leftStructure.TopRightAreaCorner, leftStructure.BottomRightAreaCorner, child.TopLeftAreaCorner, child.BottomRightAreaCorner) != -1).ToList();
+    }
+
+    //This big function will be doing all the checking for the nodes. This will check all the possible ways the corners could line up and then select
+    //where to generate the corridor.
+    private int GetValidYForNeightbourLeftRight(Vector2Int leftNodeUp, Vector2Int leftNodeDown, Vector2Int rightNodeUp, Vector2Int rightNodeDown)
+    {
+        if(rightNodeUp.y >= leftNodeUp.y && leftNodeDown.y >= rightNodeDown.y)
+        {
+
+        }
+        if(rightNodeUp.y <= leftNodeUp.y && leftNodeDown.y <= rightNodeDown.y)
+        {
+
+        }
+        if(leftNodeUp.y >= rightNodeDown.y && leftNodeUp.y <= rightNodeUp.y)
+        {
+
+        }
+        if(leftNodeDown.y >= rightNodeDown.y && leftNodeDown.y <= rightNodeUp.y)
+        {
+
+        }
+        return -1;
     }
 
     private void ProcessRoomInRelationUpOrDown(Node structureOne, Node structureTwo)

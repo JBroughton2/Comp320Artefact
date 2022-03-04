@@ -7,7 +7,7 @@ public static class StructureManager
 {
     //This is going to be the method I use to pick out all the nodes that dont have children, these will then be
     //used as the actual rooms as they are the end of the branches.
-    public static List<Node> TraverseGraphToExtractLowestLeafs(RoomNode parentNode)
+    public static List<Node> TraverseGraphToExtractLowestLeafs(Node parentNode)
     {
         Queue<Node> nodesToCheck = new Queue<Node>();
         List<Node> listToReturn = new List<Node>();
