@@ -8,6 +8,7 @@ internal class CorridorNode : Node
     private Node structureOne;
     private Node structureTwo;
     private int corridorWidth;
+    private int modifierDistanceFromWall = 1;
 
     public CorridorNode(Node node1, Node node2, int corridorWidth) : base(null)
     {
@@ -63,7 +64,30 @@ internal class CorridorNode : Node
             leftStructure = sortedLeftStructures[index];
         }
 
-        var possibleNeighboursInRightStructureList = rightStructureChildren.Where(child => GetValidYForNeightbourLeftRight(leftStructure.TopRightAreaCorner, leftStructure.BottomRightAreaCorner, child.TopLeftAreaCorner, child.BottomRightAreaCorner) != -1).ToList();
+        var possibleNeighboursInRightStructureList = rightStructureChildren.Where(
+            child => GetValidYForNeightbourLeftRight(leftStructure.TopRightAreaCorner, 
+            leftStructure.BottomRightAreaCorner,
+            child.TopLeftAreaCorner, 
+            child.BottomRightAreaCorner) != -1).OrderBy(child => child.BottomRightAreaCorner.x).ToList();
+        if(possibleNeighboursInRightStructureList.Count <= 0)
+        {
+            rightStructure = structureTwo;
+        }
+        else
+        {
+            rightStructure = possibleNeighboursInRightStructureList[0];
+        }
+        int y = GetValidYForNeightbourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+            rightStructure.TopLeftAreaCorner, rightStructure.BottomLeftAreaCorner);
+        while (y == -1 && sortedLeftStructures.Count > 1)
+        {
+            sortedLeftStructures = sortedLeftStructures.Where(Child => Child.TopLeftAreaCorner.y != leftStructure.TopLeftAreaCorner.y).ToList();
+            leftStructure = sortedLeftStructures[0];
+            y = GetValidYForNeightbourLeftRight(leftStructure.TopLeftAreaCorner, leftStructure.BottomRightAreaCorner,
+            rightStructure.TopLeftAreaCorner, rightStructure.BottomLeftAreaCorner);
+        }
+        BottomLeftAreaCorner = new Vector2Int(leftStructure.BottomRightAreaCorner.x, y);
+        TopRightAreaCorner = new Vector2Int(rightStructure.TopLeftAreaCorner.x, y + this.corridorWidth);
     }
 
     //This big function will be doing all the checking for the nodes. This will check all the possible ways the corners could line up and then select
@@ -72,26 +96,123 @@ internal class CorridorNode : Node
     {
         if(rightNodeUp.y >= leftNodeUp.y && leftNodeDown.y >= rightNodeDown.y)
         {
-
+            return StructureManager.CalculateMiddlePoint(
+                leftNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)).y;
         }
         if(rightNodeUp.y <= leftNodeUp.y && leftNodeDown.y <= rightNodeDown.y)
         {
-
+            return StructureManager.CalculateMiddlePoint(
+                rightNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                rightNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
+                ).y;
         }
         if(leftNodeUp.y >= rightNodeDown.y && leftNodeUp.y <= rightNodeUp.y)
         {
-
+            return StructureManager.CalculateMiddlePoint(
+                rightNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                leftNodeUp - new Vector2Int(0, modifierDistanceFromWall)
+                ).y;
         }
         if(leftNodeDown.y >= rightNodeDown.y && leftNodeDown.y <= rightNodeUp.y)
         {
-
+            return StructureManager.CalculateMiddlePoint(
+                leftNodeDown + new Vector2Int(0, modifierDistanceFromWall),
+                rightNodeUp - new Vector2Int(0, modifierDistanceFromWall + this.corridorWidth)
+                ).y;
         }
         return -1;
     }
 
     private void ProcessRoomInRelationUpOrDown(Node structureOne, Node structureTwo)
     {
-        throw new NotImplementedException();
+        Node bottomStructure = null;
+        List<Node> structureBottomChildren = StructureManager.TraverseGraphToExtractLowestLeafs(structureOne);
+        Node topStructure = null;
+        List<Node> structureAboveChildren = StructureManager.TraverseGraphToExtractLowestLeafs(structureTwo);
+
+        var sortedBottomStructure = structureBottomChildren.OrderByDescending(child => child.TopRightAreaCorner.y).ToList();
+
+        if (sortedBottomStructure.Count == 1)
+        {
+            bottomStructure = structureBottomChildren[0];
+        }
+        else
+        {
+            int maxY = sortedBottomStructure[0].TopLeftAreaCorner.y;
+            sortedBottomStructure = sortedBottomStructure.Where(child => Mathf.Abs(maxY - child.TopLeftAreaCorner.y) < 10).ToList();
+            int index = UnityEngine.Random.Range(0, sortedBottomStructure.Count);
+            bottomStructure = sortedBottomStructure[index];
+        }
+
+        var possibleNeighboursInTopStructure = structureAboveChildren.Where(
+            child => GetValidXForNeighbourUpDown(
+                bottomStructure.TopLeftAreaCorner,
+                bottomStructure.TopRightAreaCorner,
+                child.BottomLeftAreaCorner,
+                child.BottomRightAreaCorner)
+            != -1).OrderBy(child => child.BottomRightAreaCorner.y).ToList();
+        if (possibleNeighboursInTopStructure.Count == 0)
+        {
+            topStructure = structureTwo;
+        }
+        else
+        {
+            topStructure = possibleNeighboursInTopStructure[0];
+        }
+        int x = GetValidXForNeighbourUpDown(
+                bottomStructure.TopLeftAreaCorner,
+                bottomStructure.TopRightAreaCorner,
+                topStructure.BottomLeftAreaCorner,
+                topStructure.BottomRightAreaCorner);
+        while (x == -1 && sortedBottomStructure.Count > 1)
+        {
+            sortedBottomStructure = sortedBottomStructure.Where(child => child.TopLeftAreaCorner.x != topStructure.TopLeftAreaCorner.x).ToList();
+            bottomStructure = sortedBottomStructure[0];
+            x = GetValidXForNeighbourUpDown(
+                bottomStructure.TopLeftAreaCorner,
+                bottomStructure.TopRightAreaCorner,
+                topStructure.BottomLeftAreaCorner,
+                topStructure.BottomRightAreaCorner);
+        }
+        BottomLeftAreaCorner = new Vector2Int(x, bottomStructure.TopLeftAreaCorner.y);
+        TopRightAreaCorner = new Vector2Int(x + this.corridorWidth, topStructure.BottomLeftAreaCorner.y);
+    }
+
+    private int GetValidXForNeighbourUpDown(Vector2Int bottomNodeLeft,
+        Vector2Int bottomNodeRight, Vector2Int topNodeLeft, Vector2Int topNodeRight)
+    {
+        if (topNodeLeft.x < bottomNodeLeft.x && bottomNodeRight.x < topNodeRight.x)
+        {
+            return StructureManager.CalculateMiddlePoint(
+                bottomNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                bottomNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+                ).x;
+        }
+        if (topNodeLeft.x >= bottomNodeLeft.x && bottomNodeRight.x >= topNodeRight.x)
+        {
+            return StructureManager.CalculateMiddlePoint(
+                topNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                topNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+                ).x;
+        }
+        if (bottomNodeLeft.x >= (topNodeLeft.x) && bottomNodeLeft.x <= topNodeRight.x)
+        {
+            return StructureManager.CalculateMiddlePoint(
+                bottomNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                topNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+
+                ).x;
+        }
+        if (bottomNodeRight.x <= topNodeRight.x && bottomNodeRight.x >= topNodeLeft.x)
+        {
+            return StructureManager.CalculateMiddlePoint(
+                topNodeLeft + new Vector2Int(modifierDistanceFromWall, 0),
+                bottomNodeRight - new Vector2Int(this.corridorWidth + modifierDistanceFromWall, 0)
+
+                ).x;
+        }
+        return -1;
     }
 
     //This method will check first find the middle point of the two rooms, this will be used in our angle check which will then find the direction the corridor will need to go to connect.
