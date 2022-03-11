@@ -15,11 +15,11 @@ D:/UnrealProjects/Comp320Artefact/CompArtefact
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-62181
+56397
 Successfully changed project path to: D:/UnrealProjects/Comp320Artefact/CompArtefact
 D:/UnrealProjects/Comp320Artefact/CompArtefact
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 24.66 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 24.15 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.12f1 (b3b2c6512326)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Resources/UnitySubsystems
@@ -35,40 +35,40 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56324
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56672
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.12f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002230 seconds.
+Registered in 0.002226 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 22.07 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 22.20 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.034 seconds
+- Completed reload, in  1.011 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.003939 seconds.
+Registered in 0.003727 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.24 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.26 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.784 seconds
+- Completed reload, in  0.787 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 0.24 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1400 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 65.0 MB.
-System memory in use after: 65.0 MB.
+Unloading 1401 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 65.1 MB.
+System memory in use after: 65.2 MB.
 
-Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1833.
-Total: 1.722200 ms (FindLiveObjects: 0.126600 ms CreateObjectMapping: 0.040900 ms MarkObjects: 1.480000 ms  DeleteObjects: 0.073900 ms)
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 1834.
+Total: 1.436900 ms (FindLiveObjects: 0.113400 ms CreateObjectMapping: 0.037100 ms MarkObjects: 1.230400 ms  DeleteObjects: 0.055400 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -82,17 +82,25 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/Scripts/FloorMaterial.mat
-  artifactKey: Guid(cfb4e99129c707d4fbbaa8b5825340e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/FloorMaterial.mat using Guid(cfb4e99129c707d4fbbaa8b5825340e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ecfb09d29730251ecf85cc2cbcb256e6') in 0.287387 seconds 
-  Import took 0.289138 seconds .
+  path: Assets/Scenes
+  artifactKey: Guid(2c2637b62c7c5fd4e9fdcb799c9e03c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes using Guid(2c2637b62c7c5fd4e9fdcb799c9e03c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e96c24ca3b2d3510cf804e67fe5638b6') in 0.006963 seconds 
+  Import took 0.008651 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000260 seconds.
-  path: Assets/Scripts/CorridorNode.cs
-  artifactKey: Guid(327c1dba4f1857647adb82c26744601b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/CorridorNode.cs using Guid(327c1dba4f1857647adb82c26744601b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b83590c32cd6dbb659aa0222707ac4e') in 0.007863 seconds 
-  Import took 0.009554 seconds .
+  Time since last request: 5.355818 seconds.
+  path: Assets/Prefabs
+  artifactKey: Guid(158bda6a4d4a28d4e9a19eacc490629e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs using Guid(158bda6a4d4a28d4e9a19eacc490629e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1787fec404c5aea137cadfe21de641d') in 0.005771 seconds 
+  Import took 0.007510 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 335.434716 seconds.
+  path: Assets/Scenes/BSPDungeon.unity
+  artifactKey: Guid(778045e3ff020ce41a2122735023c74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/BSPDungeon.unity using Guid(778045e3ff020ce41a2122735023c74d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfe4d8c77e432760f65312993d97a2bb') in 0.012370 seconds 
+  Import took 0.014394 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
