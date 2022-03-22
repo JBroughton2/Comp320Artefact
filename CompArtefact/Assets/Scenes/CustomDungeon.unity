@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b815935fa278a0f4ca4a5a60fe5817ea, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -54032,6 +54032,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3648436687749352914, guid: ed1109c057f3d9c42bab39d2155679c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: BadDungeonScene
+      objectReference: {fileID: 0}
     - target: {fileID: 3648436687912874835, guid: ed1109c057f3d9c42bab39d2155679c6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
