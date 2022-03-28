@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class Node
 {
+    /*
+     * This is a custom class that will be used as the room nodes.
+     * Therefore I have set up variables for the information that will be required in the other scripts.
+     * There is also a couple simple list functions included as it will be usefun for managing the nodes children later.
+     */
+
     private List<Node> childrenNodeList;
 
     public List<Node> ChildrenNodeList { get => childrenNodeList;}

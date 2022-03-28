@@ -37,6 +37,7 @@ public static class StructureManager
         return listToReturn;
     }
 
+    //Once I have the rooms located I will need to know the corners and middle point, this is used for locate where each end of a corridor can go.
     public static Vector2Int GenerateBottomLeftCornerBetween(Vector2Int boundaryLeft, Vector2Int boundaryRight, float pointModifier, int offset)
     {
         int minX = boundaryLeft.x + offset;

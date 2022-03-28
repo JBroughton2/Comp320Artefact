@@ -5,15 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool GamePaused = false;
 
+    public static bool GamePaused = false;
     public GameObject pauseUI;
 
+    //Makes sure that when you are moving to the next level the game doesnt stay paused.
     private void Start()
     {
         Resume();
     }
 
+    //Will always be checking for if the player is trying to open the pause menu,
+    //If they are then it will activate the corrisponding functions.
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -29,6 +32,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    //Resume will remove the HUD overlay, continue time and remove the players cursor.
     private void Resume()
     {
         pauseUI.SetActive(false);
@@ -37,6 +41,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    //Pause will do the opposit of the above function.
     private void Pause()
     {
         pauseUI.SetActive(true);

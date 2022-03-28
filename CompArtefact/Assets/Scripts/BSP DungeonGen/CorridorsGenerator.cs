@@ -4,6 +4,11 @@ using System.Linq;
 
 public class CorridorsGenerator
 {
+    /* In this script the corridor list is being set up. 
+     * It begins by going through every room that could have a corridor and creating new corridors, 
+     * if there are no children then that room cannot have a corridor so the script continues past.
+     * Any that can though will be added to the corridors list, this will be used later when placing walls and floors.
+     */
     public List<Node> CreateCorridors(List<RoomNode> allSpaceNodes, int corridorWidth)
     {
         List<Node> corridorList = new List<Node>();

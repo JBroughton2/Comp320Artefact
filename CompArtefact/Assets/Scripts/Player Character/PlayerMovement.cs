@@ -8,13 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     public float speed = 12f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    // Will always be getting the inputs "Horizontal" and "Vertical",
+    //These will then be used to create a vector 3 which is parsed to the character controller's move function.
     void Update()
     {
         float x = Input.GetAxis("Horizontal");

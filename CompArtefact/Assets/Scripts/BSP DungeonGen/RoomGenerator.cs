@@ -8,12 +8,16 @@ public class RoomGenerator
     private int roomMinLength;
     private int roomMinWidth;
 
+    //this is the custom room generator constructor.
     public RoomGenerator(int maxIterations, int roomMinLength, int roomMinWidth)
     {
         this.maxIterations = maxIterations;
         this.roomMinLength = roomMinLength;
         this.roomMinWidth = roomMinWidth;
     }
+
+    //Here I am using the room nodes generated in the DungeonGenerator to map out the coordinates of each corner,
+    //once this is done it will return a list for use in the visualisation process
 
     public List<RoomNode> GenerateRoomsInGivenSpaces(List<Node> roomSpaces)
     {

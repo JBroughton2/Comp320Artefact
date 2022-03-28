@@ -18,12 +18,13 @@ public class DungeonCreator : MonoBehaviour
     List<Vector3Int> possibleWallHorizontalPos;
     List<Vector3Int> possibleWallVerticalPos;
 
-    // Start is called before the first frame update
     void Start()
     {
         GenerateDungeon();
     }
 
+    // GenerateDungeon will be responsible for taking the users input and sending it to the generator, 
+    // It then has to set up the wall lists and finally create the meshes for every room node in the list that the generator has returned.
     public void GenerateDungeon() 
     {
         DestroyAllChildren();
@@ -45,21 +46,17 @@ public class DungeonCreator : MonoBehaviour
         CreateWalls(wallParent);
     }
 
+    //The walls will be using the information that comes from the mesh creation function to fill in the walls with prefabs.
     private void CreateWalls(GameObject wallParent)
     {
         foreach (var wallPosition in possibleWallHorizontalPos)
         {
-            CreateWall(wallParent, wallPosition, wallHorizontal);
+            Instantiate(wallHorizontal, wallPosition, Quaternion.identity, wallParent.transform);
         }
         foreach (var wallPosition in possibleWallVerticalPos)
         {
-            CreateWall(wallParent, wallPosition, wallVertical);
+            Instantiate(wallVertical, wallPosition, Quaternion.identity, wallParent.transform);
         }
-    }
-
-    private void CreateWall(GameObject wallParent, Vector3Int wallPosition, GameObject wallPrefab)
-    {
-        Instantiate(wallPrefab, wallPosition, Quaternion.identity, wallParent.transform);
     }
 
     private void CreateMesh(Vector2 bottomLeftCorner, Vector2 topRightCorner)
@@ -103,9 +100,14 @@ public class DungeonCreator : MonoBehaviour
         mesh.uv = uvs;
         mesh.triangles = triangles;
 
-        //Create new gameobject to hold the mesh. IT requires both of these components so it can be visualised.
+        //Create new gameobject to hold the mesh. It requires both of these components so it can be visualised.
         GameObject dungeonFloor = new GameObject("Mesh", typeof(MeshFilter), typeof(MeshRenderer));
 
+        /*
+         * The walls and floor generation is quite messy as there are many different variables having to managed at once here.
+         * It begins by with some simple variable setting however then has to complete four different for loops
+         * these loops manage all the different positions a wall could be and adds them to the wall position list that is used above.
+         */
         dungeonFloor.transform.position = Vector3.zero;
         dungeonFloor.transform.localScale = Vector3.one;
         dungeonFloor.GetComponent<MeshFilter>().mesh = mesh;

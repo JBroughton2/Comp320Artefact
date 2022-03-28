@@ -10,13 +10,14 @@ public class CameraMouseControl : MonoBehaviour
 
     private float xRotation = 0f;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
+    //The script will always be getting the mouses current axis via the input system,
+    //it will then use the mouse sensitivity variable and time.deltaTime to smooth the floats out and make them more comfortable for players to use.
+    //The rotation is also clamped as the players body will be turning with them as they move the mouse horizontally.
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSens * Time.deltaTime;

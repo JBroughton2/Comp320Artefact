@@ -9,7 +9,8 @@ public class CameraSwitch : MonoBehaviour
     public GameObject camera1;
     public GameObject camera2;
 
-    // Update is called once per frame
+    //Simple switch bool statement contantly checked,
+    //this will ensure that the player can easily and quickly switch cameras.
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
@@ -25,6 +26,8 @@ public class CameraSwitch : MonoBehaviour
         }
     }
 
+    //These two function are just inverted versions of eachother,
+    //they will disable one cameta whilst instantly enabling the other camera.
     private void SwitchToTop()
     {
         camera1.SetActive(false);
